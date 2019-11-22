@@ -7,6 +7,7 @@ package com.avbravo.microserviciosfiscalcliente;
 
 import com.avbravo.microserviciosfiscalcliente.client.RestClient;
 import com.avbravo.microserviciosfiscalcliente.entity.Factura;
+import com.avbravo.microserviciosfiscalcliente.services.FacturaServices;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +17,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.glassfish.jersey.jackson.JacksonFeature;
 
 /**
  *
@@ -29,7 +30,9 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 @ViewScoped
 public class FacturaController implements Serializable {
 @Inject
-Messages messages;
+FacturaServices facturaServices;
+    @Inject
+    Messages messages;
     public static final int HTTP_CREATED = 201;
     private RestClient client = new RestClient();
     List<Factura> facturaList = new ArrayList<>();
@@ -51,53 +54,48 @@ Messages messages;
         this.factura = factura;
     }
 
-    
-    
-    
     @PostConstruct
     public void init() {
-//        Client client = ClientBuilder.newClient();
-//        WebTarget webTarget
-//                = client.target("http://192.168.0.4:8080/microservicesfiscalsqlserver-0.2/resources/factura");
-//        //    facturaList = service.createCars(10);
+        try {
 
-//        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-//        
-//        Response response  = invocationBuilder.get(Factura.class);
+//            Client client = ClientBuilder.newClient();
+//            WebTarget target = client.target("http://localhost:8080/microservicesfiscalsqlserver-0.2/resources/factura");
 //
-//Response responsePost   = invocationBuilder.post(Entity.entity(employee, MediaType.APPLICATION_JSON);
-//        Factura factura = new Factura(6, 147);
+//            GenericType<List<Factura>> noticias = new GenericType<List<Factura>>() { };
+//
+//            List<Factura> list = target.request(MediaType.APPLICATION_JSON).get(noticias);
+//            if (list == null || list.isEmpty()) {
+//                messages.warn("No hay facturas");
+//            } else {
+//                facturaList = list;
+//            }
+           
+            List<Factura> list = facturaServices.findAll();
+            if (list == null || list.isEmpty()) {
+                messages.warn("No hay facturas");
+            } else {
+                facturaList = list;
+            }
 
-//        Response response = client.createJsonFactura(factura);
-//        if (response.getStatus() == HTTP_CREATED) {
-//            System.out.println("== Se creo la factura");
-//        }
-
-Client client = ClientBuilder.newClient().register(new JacksonFeature());
-List<Factura> list = client
-.target("http://localhost:8080/microservicesfiscalsqlserver-0.2/resources/factura")
-.request(MediaType.APPLICATION_JSON).get(new GenericType<List<Factura>>() {
-});
-
-facturaList = list;
-       // facturaList.add(new Factura(1, 15));
-        System.out.println("-------------------> init" + facturaList.size());
+            
+        } catch (Exception e) {
+            System.out.println("error() " + e.getLocalizedMessage());
+        }
     }
 
-    
-    public String save(){
+    public String save() {
         try {
-             Response response = client.createJsonFactura(factura);
-        if (response.getStatus() == HTTP_CREATED) {
-            messages.info("Factura guardada");
-            
-        }else{
-            messages.warn("No se creo la factura");
-        }
+            Response response = client.createJsonFactura(factura);
+            if (response.getStatus() == HTTP_CREATED) {
+                messages.info("Factura guardada");
+
+            } else {
+                messages.warn("No se creo la factura");
+            }
 
         } catch (Exception e) {
             messages.error(e.getLocalizedMessage());
-            
+
         }
         return "";
     }
