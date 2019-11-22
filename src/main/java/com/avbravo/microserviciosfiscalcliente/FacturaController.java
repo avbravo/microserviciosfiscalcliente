@@ -14,7 +14,12 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.glassfish.jersey.jackson.JacksonFeature;
 
 /**
  *
@@ -68,7 +73,14 @@ Messages messages;
 //            System.out.println("== Se creo la factura");
 //        }
 
-        facturaList.add(new Factura(1, 15));
+Client client = ClientBuilder.newClient().register(new JacksonFeature());
+List<Factura> list = client
+.target("http://localhost:8080/microservicesfiscalsqlserver-0.2/resources/factura")
+.request(MediaType.APPLICATION_JSON).get(new GenericType<List<Factura>>() {
+});
+
+facturaList = list;
+       // facturaList.add(new Factura(1, 15));
         System.out.println("-------------------> init" + facturaList.size());
     }
 
