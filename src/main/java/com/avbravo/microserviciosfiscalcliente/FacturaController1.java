@@ -106,14 +106,13 @@ public class FacturaController1 implements Serializable {
 //            }else{
 //                facturaList =list;
 //            }
-            //        Client client = ClientBuilder.newClient();
+//            Client client = ClientBuilder.newClient();
             //        WebTarget webTarget
             //                = client.target("http://192.168.0.4:8080/microservicesfiscalsqlserver-0.2/resources/factura");
             //        //    facturaList = service.createCars(10);
             //        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             //        
             //        Response response  = invocationBuilder.get(Factura.class);
-            //
             //Response responsePost   = invocationBuilder.post(Entity.entity(employee, MediaType.APPLICATION_JSON);
             //        Factura factura = new Factura(6, 147);
             //        Response response = client.createJsonFactura(factura);
