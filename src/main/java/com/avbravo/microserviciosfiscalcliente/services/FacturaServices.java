@@ -32,7 +32,7 @@ public class FacturaServices implements Serializable{
         List<Factura> f= new ArrayList<>();
         try {
              Client client = ClientBuilder.newClient();
-            WebTarget target = client.target("http://localhost:8080/microservicesfiscalsqlserver-0.2/resources/factura");
+            WebTarget target = client.target("http://localhost:8080/microservicesfiscalsqlserver-0.3/resources/factura");
 
             GenericType<List<Factura>> noticias = new GenericType<List<Factura>>() { };
 

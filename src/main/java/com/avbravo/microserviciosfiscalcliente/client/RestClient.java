@@ -19,7 +19,7 @@ import javax.ws.rs.core.Response;
 public class RestClient {
 
 //    private static final String REST_URI = "http://192.168.0.4:8080/microservicesfiscalsqlserver-0.2/resources/factura";
-    private static final String REST_URI = "http://localhost:8080/microservicesfiscalsqlserver-0.2/resources/factura";
+    private static final String REST_URI = "http://localhost:8080/microservicesfiscalsqlserver-0.3/resources/factura";
 
     private Client client = ClientBuilder.newClient();
 
